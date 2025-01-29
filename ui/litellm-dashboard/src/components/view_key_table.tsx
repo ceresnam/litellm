@@ -76,6 +76,7 @@ interface ViewKeyTableProps {
   selectedTeam: any | null;
   data: any[] | null;
   setData: React.Dispatch<React.SetStateAction<any[] | null>>;
+  setTeams: React.Dispatch<React.SetStateAction<any[] | null>>;
   teams: any[] | null;
   premiumUser: boolean;
 }
@@ -107,6 +108,7 @@ const ViewKeyTable: React.FC<ViewKeyTableProps> = ({
   selectedTeam,
   data,
   setData,
+  setTeams,
   teams,
   premiumUser
 }) => {
@@ -886,6 +888,15 @@ const handleEditSubmit = async (formValues: Record<string, any>) => {
       // Successfully completed the deletion. Update the state to trigger a rerender.
       const filteredData = data.filter((item) => item.token !== keyToDelete);
       setData(filteredData);
+
+      // updated denormalized keys data in teams
+      if (teams) {
+        const filteredTeams = teams.map((team) => ({
+          ...team,
+          keys: team.keys?.filter((key) => key.token !== keyToDelete)
+        }));
+        setTeams(filteredTeams);
+      }
     } catch (error) {
       console.error("Error deleting the key:", error);
       // Handle any error situations, such as displaying an error message to the user.

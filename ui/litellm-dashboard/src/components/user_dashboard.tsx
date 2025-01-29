@@ -350,6 +350,7 @@ const UserDashboard: React.FC<UserDashboardProps> = ({
             selectedTeam={selectedTeam ? selectedTeam : null}
             data={keys}
             setData={setKeys}
+            setTeams={setTeams}
             premiumUser={premiumUser}
             teams={teams}
           />
